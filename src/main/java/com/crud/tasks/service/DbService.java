@@ -1,11 +1,13 @@
 package com.crud.tasks.service;
 
+import com.crud.tasks.controller.TaskNotFoundException;
 import com.crud.tasks.domain.Task;
 import com.crud.tasks.repository.TaskRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class DbService  {
@@ -17,7 +19,11 @@ public class DbService  {
         return repository.findAll();
     }
 
-    public Task getTask(final Long id) throws NullPointerException{
-            return repository.findById(id).orElseThrow(NullPointerException::new);
+    public Optional<Task> getTask(final Long id){
+            return repository.findById(id);
+    }
+
+    public void saveTask(final Task task){
+        repository.save(task);
     }
 }
