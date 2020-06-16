@@ -1,19 +1,17 @@
 call runcrud.bat
-echo %ERRORLEVEL%
-if %ERRORLEVEL% == "0" goto runchrome
-echo cos sie popsulo
+if "%ERRORLEVEL%" == "0" goto openbrowser
+echo runcrud script has errors - breaking work
 goto fail
 
-:runchrome
-call start chrome http://localhost:8080/crud/v1/task/getTasks
-if %ERRORLEVEL% == "0" goto end
-echo Cannot run Chrome
+:openbrowser
+start http://localhost:8080/crud/v1/task/getTasks
+if "%ERRORLEVEL%" == "0" goto end
+echo something wrong with browser
 goto fail
 
 :fail
 echo.
-echo There were errors
+echo Errors occurred
 
 :end
-echo.
-echo Work is finished.
+echo showtasks script is finished

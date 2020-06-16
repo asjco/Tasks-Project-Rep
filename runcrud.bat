@@ -24,10 +24,11 @@ goto fail
 call %CATALINA_HOME%\bin\startup.bat
 goto end
 
+
 :fail
 echo.
 echo There were errors
 
 :end
 echo.
-echo Work is finished.
+echo runcrud script is finished.
