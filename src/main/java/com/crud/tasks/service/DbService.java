@@ -9,24 +9,24 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class DbService  {
+public class DbService {
 
     @Autowired
     private TaskRepository repository;
 
-    public List<Task> getAllTasks(){
+    public List<Task> getAllTasks() {
         return repository.findAll();
     }
 
-    public Optional<Task> getTask(final Long id){
-            return repository.findById(id);
+    public Optional<Task> getTask(final Long id) {
+        return repository.findById(id);
     }
 
-    public void saveTask(final Task task){
+    public void saveTask(final Task task) {
         repository.save(task);
     }
 
-    public void deleteTaskById(final Long id){
+    public void deleteTaskById(final Long id) {
         repository.deleteById(id);
     }
 }
