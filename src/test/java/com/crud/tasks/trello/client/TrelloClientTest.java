@@ -18,7 +18,7 @@ import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
 
 @SpringBootTest
@@ -92,12 +92,15 @@ public class TrelloClientTest {
 
         when(restTemplate.getForObject(uri, TrelloBoardDto.class)).thenReturn(null);
 
+        TrelloBoardDto testValue = restTemplate.getForObject(uri, TrelloBoardDto.class);
+
         //When
         List<TrelloBoardDto> trelloBoardsList = trelloClient.getTrelloBoards();
 
         //Then
+        assertNull(testValue);
+        assertNotNull(trelloBoardsList);
         assertEquals(0, trelloBoardsList.size());
-
     }
 
 }
