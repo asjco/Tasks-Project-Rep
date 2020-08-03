@@ -3,6 +3,7 @@ package com.crud.tasks.controller;
 import com.crud.tasks.domain.Task;
 import com.crud.tasks.domain.TaskDto;
 import com.crud.tasks.mapper.TaskMapper;
+import com.crud.tasks.service.DbService;
 import com.google.gson.Gson;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
@@ -16,10 +17,11 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -32,15 +34,22 @@ public class TaskControllerTest {
     private MockMvc mockMvc;
 
     @MockBean
-    private TaskController taskController;
+    private DbService service;
+    @MockBean
+    private TaskMapper taskMapper;
+
 
     @Test
     public void sholudFetchTasksList() throws Exception {
         //Given
-        List<TaskDto> taskDtoList = new ArrayList<>();
-        taskDtoList.add(new TaskDto(1L, "test_title", "test_content"));
+        List<Task> taskList = new ArrayList<>();
+        taskList.add(new Task(1L, "test_title", "test_content"));
 
-        when(taskController.getTasks()).thenReturn(taskDtoList);
+        List<TaskDto> taskListDto = new ArrayList<>();
+        taskListDto.add(new TaskDto(1L, "test_title", "test_content"));
+
+        when(service.getAllTasks()).thenReturn(taskList);
+        when(taskMapper.mapToTaskDtoList(taskList)).thenReturn(taskListDto);
 
         //When & Then
         mockMvc.perform(get("/v1/task/getTasks").contentType(MediaType.APPLICATION_JSON))
@@ -50,13 +59,14 @@ public class TaskControllerTest {
     @Test
     public void shouldFetchTask() throws Exception {
         //Given
+
+        Task task =new Task(1L, "test_title", "test_content");
         TaskDto taskDto = new TaskDto(1L, "test_title", "test_content");
 
-        Long taskId = 1L;
+        String id = "1";
 
-        String id = taskId.toString();
-
-        when(taskController.getTask(ArgumentMatchers.anyLong())).thenReturn(taskDto);
+        when(service.getTask(ArgumentMatchers.anyLong())).thenReturn(Optional.of(task));
+        when(taskMapper.mapToTaskDto(task)).thenReturn(taskDto);
 
         //When & Then
         mockMvc.perform(get("/v1/task/getTask").contentType(MediaType.APPLICATION_JSON)
@@ -69,17 +79,14 @@ public class TaskControllerTest {
     @Test
     public void shouldDeleteTask() throws Exception {
         //Given
-        TaskDto taskDto = new TaskDto(1L, "test_title", "test_content");
-
-        Long taskId = 1L;
-
-        String id = taskId.toString();
+        String id = "1";
 
         //When & Then
         mockMvc.perform(delete("/v1/task/deleteTask").contentType(MediaType.APPLICATION_JSON)
                 .characterEncoding("UTF-8")
                 .param("taskId", id))
                 .andExpect(status().isOk());
+        verify(service).deleteTaskById(Long.valueOf(id));
     }
 
     @Test
@@ -94,6 +101,7 @@ public class TaskControllerTest {
                 .characterEncoding("UTF-8")
                 .content(jsonContent))
                 .andExpect(status().isOk());
+        verify(service).saveTask(taskMapper.mapToTask(taskDto));
     }
 
     @Test
@@ -109,6 +117,7 @@ public class TaskControllerTest {
                 .characterEncoding("UTF-8")
                 .content(jsonContent))
                 .andExpect(status().isOk());
+        verify(service).saveTask(taskMapper.mapToTask(taskDto));
     }
 
 
