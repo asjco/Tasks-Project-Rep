@@ -38,7 +38,6 @@ public class TaskControllerTest {
     @MockBean
     private TaskMapper taskMapper;
 
-
     @Test
     public void sholudFetchTasksList() throws Exception {
         //Given
@@ -60,7 +59,7 @@ public class TaskControllerTest {
     public void shouldFetchTask() throws Exception {
         //Given
 
-        Task task =new Task(1L, "test_title", "test_content");
+        Task task = new Task(1L, "test_title", "test_content");
         TaskDto taskDto = new TaskDto(1L, "test_title", "test_content");
 
         String id = "1";
@@ -119,7 +118,6 @@ public class TaskControllerTest {
                 .andExpect(status().isOk());
         verify(service).saveTask(taskMapper.mapToTask(taskDto));
     }
-
 
 
 }
