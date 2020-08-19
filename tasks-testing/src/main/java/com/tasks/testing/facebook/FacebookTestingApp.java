@@ -13,7 +13,7 @@ public class FacebookTestingApp {
     public static final String XPATH_MONTH = "//div[@class=\"_5k_5\"]/span/span/select[2]";
     public static final String XPATH_YEAR = "//div[@class=\"_5k_5\"]/span/span/select[3]";
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws InterruptedException {
         WebDriver driver = WebDriverConfig.getDriver(WebDriverConfig.CHROME);
         driver.get("https://www.facebook.com/");
 
@@ -21,6 +21,7 @@ public class FacebookTestingApp {
 
         WebElement webElement = driver.findElement(By.xpath(XPATH_REGISTER));
         webElement.click();
+        Thread.sleep(1000);
 
         while (!driver.findElement(By.xpath(XPATH_WAIT)).isDisplayed());
 
@@ -28,12 +29,12 @@ public class FacebookTestingApp {
         Select selectDay = new Select(dayElement);
         selectDay.selectByIndex(3);
 
-//        WebElement monthElement = driver.findElement(By.xpath(XPATH_MONTH));
-//        Select selectMonth = new Select(monthElement);
-//        selectMonth.selectByIndex(5);
-//
-//        WebElement yearElement = driver.findElement(By.xpath(XPATH_YEAR));
-//        Select selectYear = new Select(yearElement);
-//        selectYear.selectByIndex(5);
+        WebElement monthElement = driver.findElement(By.xpath(XPATH_MONTH));
+        Select selectMonth = new Select(monthElement);
+        selectMonth.selectByIndex(5);
+
+        WebElement yearElement = driver.findElement(By.xpath(XPATH_YEAR));
+        Select selectYear = new Select(yearElement);
+        selectYear.selectByIndex(5);
     }
 }
