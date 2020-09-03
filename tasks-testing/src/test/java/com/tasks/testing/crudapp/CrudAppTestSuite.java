@@ -12,7 +12,7 @@ import org.openqa.selenium.support.ui.Select;
 
 import java.util.Random;
 
-public class CrudAppTestSuite {
+/*public class CrudAppTestSuite {
     private static final String BASE_URL = "https://asjco.github.io/";
     private WebDriver driver;
     private Random generator;
@@ -121,4 +121,4 @@ public class CrudAppTestSuite {
         deleteCrudAppTestTask(taskName);
     }
 
-}
+}*/
