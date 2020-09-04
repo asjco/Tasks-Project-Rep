@@ -22,7 +22,7 @@ public class EmailScheduler {
         this.adminConfig = adminConfig;
     }
 
-   // @Scheduled(fixedDelay = 10000)
+    //@Scheduled(fixedDelay = 10000)
     public void sendInformationEmail() {
 
         long size = taskRepository.count();
