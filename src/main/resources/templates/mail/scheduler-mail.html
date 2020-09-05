@@ -150,8 +150,8 @@
                                         <ul th:each="function : ${application_functionality}">
                                             <li th:text="${function}"></li>
                                         </ul>
-                                        <p style="font-family: sans-serif; font-size: 14px; font-weight: normal; margin: 0; Margin-bottom: 15px;">
-                                            GOODBYE_MESSAGE</p>
+                                        <p th:text="${goodbye_message}" style="font-family: sans-serif; font-size: 14px; font-weight: normal; margin: 0; Margin-bottom: 15px;">
+                                            </p>
                                     </td>
                                 </tr>
                             </table>
@@ -170,13 +170,13 @@
                                 style="font-family: sans-serif; vertical-align: top; padding-bottom: 10px; padding-top: 10px; font-size: 12px; color: #999999; text-align: center;">
                                 <span
                                         class="apple-link" style="color: #999999; font-size: 12px; text-align: center;">
-                                  Company: <span th:text="${company_name}"> </span>
+                                  Company: <span th:text="${company_config.getCompanyName()}"> </span>
                                     <br>
-                                   Company goal: <span th:text="${company_goal}"></span>
+                                   Company goal: <span th:text="${company_config.getCompanyGoal()}"></span>
                                     <br>
-                                    Company email: <span th:text="${company_email}"> </span>
+                                    Company email: <span th:text="${company_config.getCompanyEmail()}"> </span>
                                     <br>
-                                     Company phone: <span th:text="${company_phone}"> </span>
+                                     Company phone: <span th:text="${company_config.getCompanyPhone()e}"> </span>
                                 </span>
                             </td>
                         </tr>
